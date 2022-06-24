@@ -1,0 +1,6 @@
+export const REQUEST_STATUS = {
+  NULL: "NULL",
+  IN_PROGRESS: "IN_PROGRESS",
+  SUCCESS: "SUCCESS",
+  FAIL: "FAIL",
+}

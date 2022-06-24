@@ -1,25 +1,35 @@
-import logo from './logo.svg';
+import { useEffect, useState } from 'react';
+import api from './api/api';
 import './App.css';
+import { Notification } from './components/Notification/Notification';
+import { REQUEST_STATUS } from './defaults/requestStatus.defaults';
 
+const REQUESTS_FOR = {
+
+}
 function App() {
+
+  // lista de notifications
+
+  const [postsRequestStatus, setPostsRequestStatus] = useState({ status: REQUEST_STATUS.NULL, message: "" });
+  const [usersRequestStatus, setUsersRequestStatus] = useState({ status: REQUEST_STATUS.NULL, message: "" });
+
+  useEffect(() => {
+    (async () => {
+      const responsePosts = await api.get("/api/post", { setRequestStatus: setPostsRequestStatus, requestFor: "Posturile" });
+      const responseUsers = await api.get("/api/auth/users/Suceava/Suceava", { requestFor: "Utilizatorii " });
+    })()
+  }, [])
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {/* {notification.map()} */}
+      <Notification message={postsRequestStatus.message} />
+      <Notification message={usersRequestStatus.message} />
     </div>
   );
 }
+
+
 
 export default App;
